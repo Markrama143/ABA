@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\PatientController;
+use App\Http\Controllers\API\AuthController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -15,6 +16,15 @@ use App\Http\Controllers\PatientController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+
+// AUTHENTICATION ROUTES
+Route::post('/login', [AuthController::class, 'login']);
+
+// Protected authentication routes (require Sanctum token)
+Route::middleware('auth:sanctum')->group(function () {
+        Route::post('/logout', [AuthController::class, 'logout']);
+        Route::get('/user', [AuthController::class, 'user']);
+    });
 
 // ===================================
 // APPOINTMENT ROUTES (CRUD + EXTRAS)
