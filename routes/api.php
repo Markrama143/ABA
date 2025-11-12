@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\PatientController;
+use App\Http\Controllers\API\RegisterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -66,3 +67,15 @@ Route::delete('/doctors/{id}', [DoctorController::class, 'destroy']); // Delete 
 // Additional doctor routes
 Route::get('/doctors/search/{name}', [DoctorController::class, 'searchByName']);                  // Search doctors by name
 Route::get('/doctors/{id}/appointments', [DoctorController::class, 'getDoctorWithAppointments']); // Get doctor with appointments
+
+// ===================================
+// AUTHENTICATION ROUTES
+// ===================================
+// Public routes (no authentication required)
+Route::post('/register', [RegisterController::class, 'register']); // User registration
+Route::post('/login', [RegisterController::class, 'login']); // User login
+
+// Protected routes (requires authentication)
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/logout', [RegisterController::class, 'logout']); // User logout
+});
