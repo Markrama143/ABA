@@ -66,14 +66,3 @@ Route::delete('/doctors/{id}', [DoctorController::class, 'destroy']); // Delete 
 Route::get('/doctors/search/{name}', [DoctorController::class, 'searchByName']);                  // Search doctors by name
 Route::get('/doctors/{id}/appointments', [DoctorController::class, 'getDoctorWithAppointments']); // Get doctor with appointments
 
-// ===================================
-// AUTHENTICATION ROUTES
-// ===================================
-// Public routes (no authentication required)
-Route::post('/register', [RegisterController::class, 'register']); // User registration
-Route::post('/login', [RegisterController::class, 'login']); // User login
-
-// Protected routes (requires authentication)
-Route::middleware('auth:sanctum')->group(function () {
-    Route::post('/logout', [RegisterController::class, 'logout']); // User logout
-});
